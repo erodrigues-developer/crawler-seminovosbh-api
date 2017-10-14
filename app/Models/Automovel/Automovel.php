@@ -6,6 +6,7 @@ use App\Models\Proprietario\Proprietario;
 class Automovel extends Model
 {
     public $acessorios;
+    public $codigo;
     public $dataCadastro;
     public $detalhes;
     public $imagens;

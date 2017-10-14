@@ -23,7 +23,7 @@ class AutomovelRepo implements IAutomovelRepo
         $caminho = sprintf(AutomovelRepo::URL_SEMINOVOS_BUSCA_AUTOMOVEL, $id);
 
         $crawler = Goutte::request('GET', $caminho);
-        $resultados = $this->obterResultadosBusca($crawler);
+        $resultados = $this->obterResultadosBusca($crawler, $id);
 
         return ($resultados);
     }
@@ -31,7 +31,7 @@ class AutomovelRepo implements IAutomovelRepo
     /**
      * Método responsável por obter os resultados da busca
      */
-    public function obterResultadosBusca($crawler)
+    public function obterResultadosBusca($crawler, $id)
     {
         $imagem = $crawler->filter('#conteudo')->filterXPath('//img[contains(@src, "")]')->each(function ($node) {
             return $node->extract(['src'])[0];
@@ -42,9 +42,9 @@ class AutomovelRepo implements IAutomovelRepo
                 return [];
             }
         }
-        
+
         $imagensVeiculo = $this->obterImagensVeiculo($crawler);
- 
+
         $nomeAnuncio = $crawler->filter('#textoBoxVeiculo > h5')->each(function ($node) {
             return trim($node->text());
         });
@@ -69,7 +69,7 @@ class AutomovelRepo implements IAutomovelRepo
             return trim($node->text());
         });
 
-        return [$this->montarModelAutomovel($detalhes, $acessorios, $observacoes, $contato, $nomeAnuncio, $valorVeiculo, $imagensVeiculo)];
+        return [$this->montarModelAutomovel($id, $detalhes, $acessorios, $observacoes, $contato, $nomeAnuncio, $valorVeiculo, $imagensVeiculo)];
     }
 
     /**
@@ -97,29 +97,29 @@ class AutomovelRepo implements IAutomovelRepo
     /**
      * Método responsável por montar o model com os resultados da busca
      */
-    public function montarModelAutomovel($detalhes, $acessorios, $observacoes, $contato, $nomeAnuncio, $valorVeiculo, $imagensVeiculo)
+    public function montarModelAutomovel($id, $detalhes, $acessorios, $observacoes, $contato, $nomeAnuncio, $valorVeiculo, $imagensVeiculo)
     {
         $resultado = new Automovel();
-        $resultado->nomeAnuncio = $nomeAnuncio[0];
-        $resultado->valorVeiculo = $valorVeiculo[0];
+        $resultado->codigo = $id;
+        $resultado->nomeAnuncio = empty($nomeAnuncio) ? '' : $nomeAnuncio[0];
+        $resultado->valorVeiculo = empty($valorVeiculo) ? '' : $valorVeiculo[0];
         $resultado->detalhes = $detalhes;
         $resultado->acessorios = $acessorios;
-        $resultado->obsevacoes = $observacoes[0];
+        $resultado->obsevacoes = empty($observacoes) ? '' : $observacoes[0];
         $resultado->imagens = $imagensVeiculo;
-        $resultado->visualizacoes = $observacoes[0];
 
         foreach ($contato as $key => $value) {
             if (strpos($value, 'Visualizações:') !== false) {
-                $resultado->visualizacoes = intval((explode('Visualizações: ', $value))[1]);
+                $resultado->visualizacoes = intval((explode('Visualizações: ', $value))[1]) ? intval((explode('Visualizações: ', $value))[1]) : null;
             }
             if (strpos($value, 'Cadastro em: ') !== false) {
-                $resultado->dataCadastro = explode('Cadastro em: ', $value)[1];
+                $resultado->dataCadastro = explode('Cadastro em: ', $value)[1] ? explode('Cadastro em: ', $value)[1] : null;
             }
         }
 
-        $resultado->proprietario->nome = $contato[0];
-        $resultado->proprietario->cidade = $contato[1];
-        $resultado->proprietario->contato = $contato[2];
+        $resultado->proprietario->nome = empty($contato) ? '' : $contato[0];
+        $resultado->proprietario->cidade = empty($contato) ? '' : $contato[1];
+        $resultado->proprietario->contato = empty($contato) ? '' : $contato[2];
 
         return $resultado;
     }
