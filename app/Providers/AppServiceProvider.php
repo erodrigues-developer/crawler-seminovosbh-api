@@ -21,5 +21,9 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\Automovel\IAutomovelRepo',
             'App\Repositories\Automovel\AutomovelRepo'
         );
+        $this->app->bind(
+            'App\Repositories\Marca\IMarcaRepo',
+            'App\Repositories\Marca\MarcaRepo'
+        );
     }
 }

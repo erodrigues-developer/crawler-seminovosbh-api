@@ -18,3 +18,7 @@ $router->get('busca', [
 $router->get('automovel/{id}', [
     'as' => 'automovel', 'uses' => 'AutomovelController@onGet',
 ]);
+
+$router->get('marca', [
+    'as' => 'marca', 'uses' => 'MarcaController@onGet',
+]);

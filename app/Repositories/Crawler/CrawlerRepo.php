@@ -6,7 +6,7 @@ use Weidner\Goutte\GoutteFacade as Goutte;
 class CrawlerRepo implements ICrawlerRepo
 {
     const URL_SEMINOVOS_BUSCA_TOTAL_CARRO = 'https://www.seminovosbh.com.br/resultadobusca/index/veiculo/carro/estado-conservacao/seminovo/usuario/todos';
-    const URL_SEMINOVOS_BUSCA_MARCA = 'https://www.seminovosbh.com.br/resultadobusca/index/veiculo/carro/estado-conservacao/seminovo%susuario/todos/pagina/%s';
+    const URL_SEMINOVOS_BUSCA_MARCA = 'https://www.seminovosbh.com.br/resultadobusca/index/veiculo/carro%susuario/todos/pagina/%s';
 
     public function CrawlerRepo()
     {
@@ -20,6 +20,10 @@ class CrawlerRepo implements ICrawlerRepo
         $url = '';
         if ($request->has('marca')) {
             $url .= 'marca/' . $request->get('marca') . '/';
+        }
+
+        if ($request->has('modelo')) {
+            $url .= 'modelo/' . $request->get('modelo') . '/';
         }
 
         if ($request->has('cidade')) {
