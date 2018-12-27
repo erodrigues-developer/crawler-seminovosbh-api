@@ -127,9 +127,14 @@ class CrawlerRepo implements ICrawlerRepo
             }
         }
 
+        $imagem = $crawler->filter('.bg-busca > dt > a > img')->filterXPath('//img[contains(@src, "")]')->each(function ($node) {
+            return $node->extract(['src'])[0];
+        });
+
         $arrayFinal = [];
         foreach ($nomes as $key => $value) {
-            $arrayFinal[$value[0]] = $linksDetalhes[$key];
+            $arrayFinal[$value[0]] = $linksDetalhes[$key] . '/' . $imagem[$key];
+            // $arrayFinal['imagem'] = $imagem[$key];
         }
         return $arrayFinal;
     }
@@ -142,6 +147,7 @@ class CrawlerRepo implements ICrawlerRepo
         $resultado->id = $dados[5];
         $resultado->marca = $dados[2];
         $resultado->nome = $dados[3];
+        $resultado->imagem = $dados[7].'//'.$dados[9].'/'.$dados[10];
         $resultado->anuncio = $anuncio;
         return $resultado;
     }

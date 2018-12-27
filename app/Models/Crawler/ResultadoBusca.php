@@ -9,4 +9,5 @@ class ResultadoBusca extends Model
     public $marca;
     public $nome;
     public $anuncio;
+    public $imagem;
 }
