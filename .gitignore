@@ -5,3 +5,4 @@ Homestead.yaml
 .env
 /.vscode
 composer.lock
+composer.phar

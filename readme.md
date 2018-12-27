@@ -1,21 +1,25 @@
-# Lumen PHP Framework
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://poser.pugx.org/laravel/lumen-framework/d/total.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/lumen-framework/v/stable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/lumen-framework/v/unstable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://packagist.org/packages/laravel/lumen-framework)
+# Pré-requisitos
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+ - [PHP 5.6 >=](http://php.net/downloads.php);
+ - [Composer](https://getcomposer.org/download/)
 
-## Official Documentation
+  # Passo a Passo para Execução do Projeto
 
-Documentation for the framework can be found on the [Lumen website](http://lumen.laravel.com/docs).
+	
 
-## Security Vulnerabilities
+ 1. Clone ou faça download do projeto:`git clone https://github.com/erodrigues-developer/crawler-seminovosbh-api`;
+ 2. Dentro da pasta do projeto execute o comando: `composer install` e aguarde;
+ 3. Após baixada todas as depêncidencias basta executar o servidor interno do php na raiz do projeto: `php -S localhost:8080 -t public`
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+  
 
-## License
+# Projeto Original
+Este projeto foi adaptado à partir do projeto abaixo.
+https://github.com/josefcts/crawler-seminovosbh-api
 
-The Lumen framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+Principais modificações:
+
+ - Criado classe de tratamento de exceção para retorno de erros no formato próprio para API (JSON);
+ - Criado funcionalidade para buscar todas as marcas diretamente da página inicial;
+ - Adicionada a propriedade imagem ao componente de Busca para recuperar imagens dos anúncios;
